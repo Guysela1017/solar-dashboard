@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פוטנציאל סולארי | רשויות מקומיות</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<style>
+:root {
+  --blue:    #1a2e4a;
+  --orange:  #F5A623;
+  --green:   #1D9E75;
+  --red:     #E24B4A;
+  --bg:      #f0f2f5;
+  --card:    #ffffff;
+  --text:    #1a1a1a;
+  --muted:   #888;
+  --border:  #ebebeb;
+  --radius:  12px;
+  --shadow:  0 2px 10px rgba(0,0,0,0.07);
+  --shadow2: 0 6px 24px rgba(0,0,0,0.11);
+  --trans:   0.2s ease;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--bg); color: var(--text);
+  direction: rtl; min-height: 100vh;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────── */
+.header {
+  background: linear-gradient(135deg, #1a2e4a 0%, #243f65 100%);
+  color: white; padding: 1.1rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 3px 16px rgba(0,0,0,0.22);
+  position: relative; overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute; top: -60px; left: -40px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header::after {
+  content: '';
+  position: absolute; bottom: -80px; right: 10%;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(29,158,117,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-left h1 { font-size: 19px; font-weight: 700; letter-spacing: -0.2px; }
+.header-left p  { font-size: 11px; opacity: 0.6; margin-top: 3px; }
+.header-badge {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 20px; padding: 5px 14px; font-size: 12px; opacity: 0.9;
+  position: relative; z-index: 1;
+}
+
+/* ── Layout ─────────────────────────────────────────────────────────── */
+.main { max-width: 1120px; margin: 0 auto; padding: 1.75rem 1.5rem; }
+
+/* ── Search ─────────────────────────────────────────────────────────── */
+.search-wrapper { max-width: 600px; margin: 0 auto 2rem; }
+.search-box {
+  background: white; border-radius: 30px;
+  padding: 5px 5px 5px 18px;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 3px 16px rgba(0,0,0,0.09);
+  border: 1.5px solid transparent;
+  transition: border-color var(--trans), box-shadow var(--trans);
+  position: relative;
+}
+.search-box:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 6px 24px rgba(26,46,74,0.16);
+}
+.search-icon { color: #bbb; flex-shrink: 0; display: flex; align-items: center; }
+.search-icon svg { width: 18px; height: 18px; }
+input[type=text] {
+  flex: 1; padding: 10px 2px; font-size: 15px;
+  border: none; outline: none; direction: rtl;
+  font-family: inherit; background: transparent;
+}
+.btn {
+  padding: 11px 26px; background: var(--blue); color: white;
+  border: none; border-radius: 26px; cursor: pointer;
+  font-size: 14px; font-family: inherit; font-weight: 600;
+  transition: background var(--trans); flex-shrink: 0;
+}
+.btn:hover { background: #243f65; }
+
+#suggestions {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  width: 100%; background: white;
+  border: 1.5px solid var(--border); border-radius: 16px;
+  z-index: 200; max-height: 260px; overflow-y: auto;
+  box-shadow: var(--shadow2); display: none;
+}
+.sug-item {
+  padding: 11px 18px; cursor: pointer; font-size: 14px;
+  border-bottom: 1px solid #f5f5f5; transition: background var(--trans);
+}
+.sug-item:hover { background: #f0f3f7; color: var(--blue); }
+.sug-item:last-child { border-bottom: none; }
+
+/* ── City header ────────────────────────────────────────────────────── */
+.city-header {
+  display: flex; align-items: baseline; gap: 14px; margin-bottom: 1.5rem;
+}
+.city-name { font-size: 30px; font-weight: 900; color: var(--blue); }
+.city-sub  { font-size: 13px; color: var(--muted); }
+
+/* ── Section label ──────────────────────────────────────────────────── */
+.section-label {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;
+}
+.section-label::before {
+  content: ''; width: 4px; height: 20px;
+  background: var(--orange); border-radius: 2px; flex-shrink: 0;
+}
+.section-label span {
+  font-size: 11px; font-weight: 800; color: var(--blue);
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+/* ── Card shell ─────────────────────────────────────────────────────── */
+.card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ── KPI stat grid ──────────────────────────────────────────────────── */
+.stat-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 12px; margin-bottom: 1.25rem;
+}
+@media(max-width:860px){ .stat-grid { grid-template-columns: repeat(3,1fr); } }
+@media(max-width:520px){ .stat-grid { grid-template-columns: repeat(2,1fr); } }
+
+.stat-card {
+  background: var(--card); border-radius: var(--radius);
+  padding: 18px 16px; box-shadow: var(--shadow);
+  display: flex; flex-direction: column; min-height: 115px;
+}
+.stat-card.accent { border-top: 3px solid var(--blue); }
+
+.stat-lbl {
+  font-size: 10px; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
+}
+.stat-val-row { display: flex; align-items: baseline; gap: 5px; }
+.stat-val  { font-size: 38px; font-weight: 900; color: var(--blue); line-height: 1; }
+.stat-unit { font-size: 14px; color: #bbb; font-weight: 500; }
+.stat-sub  { font-size: 11px; color: #bbb; margin-top: auto; padding-top: 8px; line-height: 1.4; }
+
+/* Realization card — colored background */
+.stat-card.real-card { border-top: none; }
+.stat-card.real-card .stat-lbl  { color: rgba(255,255,255,0.75); }
+.stat-card.real-card .stat-val  { color: white; }
+.stat-card.real-card .stat-unit { color: rgba(255,255,255,0.65); }
+.stat-card.real-card .stat-sub  { color: rgba(255,255,255,0.6); }
+.real-mini-bar {
+  height: 4px; border-radius: 2px; background: rgba(255,255,255,0.25);
+  margin-top: 10px; overflow: hidden;
+}
+.real-mini-fill { height: 100%; border-radius: 2px; background: rgba(255,255,255,0.8); }
+
+/* ── Two-col layout ─────────────────────────────────────────────────── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+@media(max-width:650px){ .two-col { grid-template-columns: 1fr; } }
+
+/* ── Legend ─────────────────────────────────────────────────────────── */
+.legend { display: flex; gap: 16px; margin-bottom: 14px; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
+.legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+/* ── Land-use rows ──────────────────────────────────────────────────── */
+.usage-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 0; border-bottom: 1px solid #f7f7f7;
+}
+.usage-row:last-child { border-bottom: none; }
+
+.usage-icon {
+  width: 28px; height: 28px; flex-shrink: 0;
+  background: var(--bg); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--blue);
+}
+.usage-icon svg { width: 15px; height: 15px; }
+
+.usage-label { font-size: 12px; color: #444; min-width: 130px; flex-shrink: 0; font-weight: 500; }
+
+.bar-wrap {
+  flex: 1; height: 10px; background: #eef0f3; border-radius: 5px;
+  position: relative; overflow: hidden;
+}
+.bar-pot  { height: 100%; background: var(--blue); border-radius: 5px; transition: width 0.5s ease; }
+.bar-inst { position: absolute; top: 0; right: 0; height: 100%; background: var(--orange); border-radius: 5px; }
+
+.usage-mw { font-size: 12px; color: var(--blue); font-weight: 700; min-width: 56px; text-align: left; }
+
+/* ── Badge ──────────────────────────────────────────────────────────── */
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; }
+.hi { background: #e8f5ef; color: #1a7a3a; }
+.mi { background: #fff4e3; color: #b35c00; }
+.lo { background: #fde8e8; color: #c62828; }
+
+/* ── Neighborhood bars ──────────────────────────────────────────────── */
+.neigh-rows { display: flex; flex-direction: column; }
+.neigh-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 8px; border-radius: 6px;
+}
+.neigh-row:nth-child(odd) { background: #fafbfc; }
+.neigh-name {
+  font-size: 12px; color: #444; min-width: 110px; flex-shrink: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500;
+}
+.neigh-bar-wrap {
+  flex: 1; height: 12px; background: #eef0f3; border-radius: 6px;
+  position: relative; overflow: hidden;
+}
+.neigh-bar-pot  { height: 100%; background: var(--blue); border-radius: 6px; }
+.neigh-bar-inst { position: absolute; top: 0; right: 0; height: 100%; background: var(--orange); border-radius: 6px; }
+.neigh-val { font-size: 11px; color: var(--muted); min-width: 50px; text-align: left; }
+
+/* ── Top-10 table ───────────────────────────────────────────────────── */
+.top-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.top-table thead th {
+  text-align: right; padding: 9px 12px;
+  font-size: 10px; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 2px solid #f0f0f0; background: #fafafa;
+}
+.top-table tbody td { padding: 10px 12px; border-bottom: 1px solid #f5f5f5; text-align: right; }
+.top-table tbody tr:hover { background: #f6f8fa; }
+.top-table tbody tr:last-child td { border-bottom: none; }
+.rank-num { color: var(--blue); font-weight: 800; font-size: 14px; }
+
+/* ── Canopy vertical cards ──────────────────────────────────────────── */
+.canopy-stack { display: flex; flex-direction: column; gap: 10px; }
+
+.canopy-v-card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow); overflow: hidden;
+  border: 1.5px solid transparent;
+  transition: border-color var(--trans), box-shadow var(--trans);
+}
+.canopy-v-card:hover { border-color: var(--blue); box-shadow: var(--shadow2); }
+.canopy-v-card.active { border-color: var(--blue); box-shadow: var(--shadow2); }
+
+.canopy-v-header {
+  display: flex; align-items: center; cursor: pointer;
+  direction: ltr;
+  user-select: none;
+}
+
+.canopy-v-icon-box {
+  width: 90px; min-height: 90px; flex-shrink: 0;
+  background: var(--bg); display: flex; align-items: center; justify-content: center;
+  color: var(--blue);
+}
+.canopy-v-icon-box svg { width: 42px; height: 42px; }
+
+.canopy-v-mw-section {
+  display: flex; flex-direction: column; align-items: flex-start;
+  padding: 0 20px; flex-shrink: 0; min-width: 160px;
+}
+.canopy-v-mw-row { display: flex; align-items: baseline; gap: 5px; }
+.canopy-v-mw      { font-size: 48px; font-weight: 900; color: var(--blue); line-height: 1; }
+.canopy-v-mw-unit { font-size: 15px; color: #bbb; font-weight: 500; }
+.canopy-v-inst    { font-size: 11px; color: var(--muted); margin-top: 4px; direction: rtl; }
+.canopy-v-inst strong { color: var(--blue); font-weight: 700; }
+
+.canopy-v-info {
+  flex: 1; padding: 16px 12px;
+  display: flex; flex-direction: column; justify-content: center;
+  direction: rtl;
+}
+.canopy-v-name  { font-size: 17px; font-weight: 800; color: var(--blue); margin-bottom: 4px; }
+.canopy-v-sites { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+
+.canopy-v-chevron {
+  width: 48px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: #ccc; transition: transform var(--trans), color var(--trans);
+}
+.canopy-v-chevron svg { width: 20px; height: 20px; }
+.canopy-v-card.active .canopy-v-chevron { transform: rotate(180deg); color: var(--blue); }
+
+/* ── Canopy accordion ───────────────────────────────────────────────── */
+.canopy-accordion {
+  max-height: 0; overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+  border-top: 1px solid transparent;
+}
+.canopy-accordion.open {
+  max-height: 2000px; opacity: 1;
+  border-top-color: var(--border);
+}
+.canopy-accordion-inner { padding: 1.25rem 1.5rem; }
+
+.accordion-hdr {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid #f0f0f0;
+}
+.accordion-title { font-size: 11px; font-weight: 800; color: var(--blue); text-transform: uppercase; letter-spacing: 0.07em; }
+.accordion-note  { font-size: 11px; color: #ccc; font-style: italic; margin-top: 3px; }
+.accordion-close {
+  background: none; border: none; cursor: pointer;
+  color: #ccc; font-size: 18px; line-height: 1; flex-shrink: 0; padding: 0 0 0 10px;
+}
+.accordion-close:hover { color: #666; }
+
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.canopy-neigh-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 420px; }
+.canopy-neigh-table thead th {
+  text-align: right; padding: 9px 12px;
+  font-size: 10px; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 2px solid #f0f0f0; background: #fafafa;
+}
+.canopy-neigh-table tbody td { padding: 10px 12px; border-bottom: 1px solid #f5f5f5; text-align: right; }
+.canopy-neigh-table tbody tr:hover { background: #f6f8fa; }
+.canopy-neigh-table tbody tr:last-child td { border-bottom: none; }
+
+.top-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.top-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 500px; }
+
+/* ── Empty state ────────────────────────────────────────────────────── */
+.empty { text-align: center; padding: 5rem 1rem; color: #ccc; font-size: 16px; line-height: 1.6; }
+.empty-icon { font-size: 48px; margin-bottom: 16px; }
+.empty a { color: var(--blue); }
+code { background: #f0f2f5; padding: 3px 10px; border-radius: 6px; font-size: 13px; display: inline-block; margin: 4px 0; }
+
+/* ── Mobile responsive ──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .header { padding: 0.9rem 1rem; flex-wrap: wrap; gap: 8px; }
+  .header-left h1 { font-size: 15px; }
+  .header-badge { font-size: 11px; padding: 4px 10px; }
+  .main { padding: 1rem 0.75rem; }
+  .search-wrapper { margin-bottom: 1.25rem; }
+  input[type=text] { font-size: 14px; }
+  .btn { padding: 10px 16px; font-size: 13px; }
+  .city-name { font-size: 22px; }
+  .city-sub { font-size: 12px; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 1rem; }
+  .stat-card { padding: 14px 12px; min-height: 100px; }
+  .stat-val { font-size: 28px; }
+  .stat-lbl { font-size: 9px; }
+  .card { padding: 1rem; margin-bottom: 1rem; }
+  .section-label span { font-size: 10px; }
+  .usage-label { min-width: 100px; font-size: 11px; }
+  .usage-mw { min-width: 44px; font-size: 11px; }
+  .neigh-name { min-width: 80px; font-size: 11px; }
+  .neigh-val { min-width: 40px; font-size: 10px; }
+  .legend { gap: 10px; }
+  .legend-item { font-size: 10px; }
+
+  /* Canopy cards — stack icon/MW/info vertically on very narrow screens */
+  .canopy-v-header { flex-wrap: wrap; }
+  .canopy-v-icon-box { width: 60px; min-height: 60px; }
+  .canopy-v-icon-box svg { width: 28px; height: 28px; }
+  .canopy-v-mw-section { min-width: 100px; padding: 0 12px; }
+  .canopy-v-mw { font-size: 32px; }
+  .canopy-v-mw-unit { font-size: 12px; }
+  .canopy-v-inst { font-size: 10px; }
+  .canopy-v-name { font-size: 14px; }
+  .canopy-v-sites { font-size: 11px; }
+  .canopy-v-chevron { width: 36px; }
+  .canopy-accordion-inner { padding: 1rem; }
+  .accordion-hdr { flex-direction: column; gap: 8px; }
+  .accordion-close { align-self: flex-end; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>🌞 פוטנציאל ייצור אנרגיה סולארית</h1>
+    <p>מקור: משרד האנרגיה והתשתיות + המרכז למיפוי ישראל · אפריל 2026</p>
+  </div>
+  <div class="header-badge" id="cityCount">טוען נתונים...</div>
+</div>
+
+<div class="main">
+  <div class="search-wrapper">
+    <div class="search-box">
+      <div class="search-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <input type="text" id="cityInput" placeholder="חפש רשות מקומית... (למשל: תל אביב, ירושלים, חיפה)" autocomplete="off" />
+      <div id="suggestions"></div>
+      <button class="btn" onclick="loadCity()">הצג</button>
+    </div>
+  </div>
+
+  <div id="dashboard">
+    <div class="empty">
+      <div class="empty-icon">🔍</div>
+      חפש רשות מקומית כדי לצפות בנתוני הפוטנציאל הסולארי
+    </div>
+  </div>
+</div>
+
+<script>
+let SOLAR_DATA = null;
+let cities     = [];
+const csvCache = {};
+
+// ── Icon maps ─────────────────────────────────────────────────────────────
+const USAGE_ICONS = {
+  'מגורים': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1z"/><path d="M9 21V12h6v9"/></svg>`,
+  'תעשייה': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20V9l5 3V9l5 3V5h5v15H2z"/><line x1="2" y1="20" x2="22" y2="20"/></svg>`,
+  'מסחר, משרדים ותיירות': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1-7h16l1 7"/><path d="M3 9a4 4 0 008 0 4 4 0 008 0"/><path d="M5 9v12h14V9"/></svg>`,
+  'ציבורי': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.74"/></svg>`,
+  'רשות מקומית': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 9 12 2 2 9"/><line x1="2" y1="21" x2="22" y2="21"/><rect x="5" y="9" width="3" height="7"/><rect x="11" y="9" width="3" height="7"/><rect x="17" y="9" width="3" height="7"/><line x1="2" y1="16" x2="22" y2="16"/></svg>`,
+  'חקלאות': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V13m0 0C12 8 8 4 3 4c0 5 4 9 9 9zm0 0c0-5 4-9 9-9-4.5 1-8 5-9 9z"/></svg>`,
+  'תשתיות ומתקנים הנדסיים': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  'אחר': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="6" cy="12" r="1" fill="currentColor"/><circle cx="18" cy="12" r="1" fill="currentColor"/></svg>`,
+};
+
+const CANOPY_META = {
+  'חניון ציבורי':         { order: 0, svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="3"/><path d="M8 7h5a3 3 0 010 6H8V7zm0 6v4"/></svg>` },
+  'מגרש ספורט':           { order: 1, svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/></svg>` },
+  'בית עלמין':            { order: 2, svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="16"/><line x1="7" y1="7" x2="17" y2="7"/><path d="M5 22h14"/><path d="M7 17c0-2.8 2.2-5 5-5s5 2.2 5 5"/></svg>` },
+  'פארקים':               { order: 3, svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><line x1="12" y1="14" x2="12" y2="22"/><line x1="8" y1="20" x2="16" y2="20"/></svg>` },
+  'חניון תחבורה ומסופים': { order: 4, svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v6m7-6v6M2 12h19.6M18 18h2a2 2 0 002-2V9a2 2 0 00-2-2H4a2 2 0 00-2 2v7a2 2 0 002 2h1"/><circle cx="7" cy="18" r="2"/><path d="M9 18h5"/><circle cx="16" cy="18" r="2"/></svg>` },
+};
+
+const CHEVRON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
+
+// ── CSV fetching ──────────────────────────────────────────────────────────
+async function fetchCSV(path) {
+  if (csvCache[path]) return csvCache[path];
+  const resp = await fetch(path);
+  if (!resp.ok) throw new Error(`Failed to fetch ${path}: ${resp.status}`);
+  const text = await resp.text();
+  const result = Papa.parse(text.replace(/^﻿/, ''), {
+    header: true, skipEmptyLines: true, dynamicTyping: true
+  });
+  csvCache[path] = result.data;
+  return result.data;
+}
+
+// ── Registry load ─────────────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const res = await fetch('data.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    SOLAR_DATA = await res.json();
+    cities = Object.keys(SOLAR_DATA.cities).sort();
+    document.getElementById('cityCount').textContent = `${cities.length} רשויות מקומיות`;
+  } catch(e) {
+    document.getElementById('cityCount').textContent = 'שגיאה בטעינת נתונים';
+    document.getElementById('dashboard').innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">⚠️</div>
+        <strong>לא ניתן לטעון נתונים מדפדפן ישיר.</strong><br><br>
+        הפעל שרת מקומי:<br>
+        <code>python3 -m http.server 8080</code><br><br>
+        ואז פתח: <a href="http://localhost:8080">http://localhost:8080</a>
+      </div>`;
+    console.error(e);
+  }
+}
+
+loadData();
+
+// ── Search autocomplete ───────────────────────────────────────────────────
+document.getElementById('cityInput').addEventListener('input', function() {
+  if (!SOLAR_DATA) return;
+  const q = this.value.trim();
+  const sug = document.getElementById('suggestions');
+  if (!q) { sug.style.display='none'; return; }
+  const m = cities.filter(c => c.includes(q)).slice(0, 10);
+  if (!m.length) { sug.style.display='none'; return; }
+  sug.innerHTML = m.map(c =>
+    `<div class="sug-item" onclick="selectCity('${c.replace(/'/g,"\\'")}')">${c}</div>`
+  ).join('');
+  sug.style.display = 'block';
+});
+
+document.getElementById('cityInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') loadCity();
+});
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrapper')) document.getElementById('suggestions').style.display='none';
+});
+
+function selectCity(c) {
+  document.getElementById('cityInput').value = c;
+  document.getElementById('suggestions').style.display='none';
+  loadCity();
+}
+
+// ── Load & parse city data ────────────────────────────────────────────────
+async function loadCity() {
+  const name = document.getElementById('cityInput').value.trim();
+  if (!SOLAR_DATA) return;
+
+  const city = SOLAR_DATA.cities[name];
+  if (!city) {
+    document.getElementById('dashboard').innerHTML =
+      `<div class="empty"><div class="empty-icon">❌</div>הרשות "<strong>${name}</strong>" לא נמצאה</div>`;
+    return;
+  }
+
+  document.getElementById('dashboard').innerHTML =
+    `<div class="empty"><div class="empty-icon">⏳</div>טוען נתונים עבור ${name}…</div>`;
+
+  try {
+    const meta  = SOLAR_DATA.meta;
+    const id    = String(city.id);
+    const files = meta.files;
+
+    const [bldgGenRows, bldgDetRows, cmplxGenRows, cmplxDetRows] = await Promise.all([
+      fetchCSV(files.bldg_settlement_general.path),
+      fetchCSV(files.bldg_settlement_details.path),
+      fetchCSV(files.cmplx_settlement_general.path),
+      fetchCSV(files.cmplx_settlement_details.path),
+    ]);
+
+    const gen   = bldgGenRows.find(r => String(r['סמל רשות']) === id) || {};
+    const cGen  = cmplxGenRows.find(r => String(r['סמל רשות']) === id) || {};
+    const bldgDet = bldgDetRows.filter(r =>
+      String(r['סמל רשות']) === id && r['הערות'] === 'usg code is main usage'
+    );
+
+    const d = {
+      buildings:          Number(gen['מספר מבנים'])                                   || 0,
+      roof_area:          Number(gen['שטח גגות כולל (דונם)'])                         || 0,
+      suitable_area:      Number(gen['שטח פוטנציאל שנמצא מתאים לסולארי (דונם)'])      || 0,
+      potential_mw:       Number(gen['הספק פוטנציאל מוערך (MW)'])                     || 0,
+      installed_mw:       Number(gen['הספק מותקן מוערך קיים (MW)'])                   || 0,
+      realization_pct:    Number(gen['אחוז מימוש'])                                   || 0,
+      dual_use_mw:        Number(gen['הספק מותקן דו שימוש חח"י'])                     || 0,
+      cmplx_potential_mw: Number(cGen['הספק פוטנציאל מוערך (MW)'])                    || 0,
+      cmplx_sites:        Number(cGen['מספר מתחמים לקירוי סולארי'])                   || 0,
+      usage:              {},
+      neighborhoods:      [],
+      top10_municipal:    [],
+      canopy_types:       [],
+      canopy_neighborhoods: [],
+    };
+
+    for (const row of bldgDet) {
+      d.usage[row['סיווג שימוש']] = {
+        potential_mw:    Number(row['הספק פוטנציאל מוערך (MW)'])   || 0,
+        installed_mw:    Number(row['הספק מותקן מוערך קיים (MW)']) || 0,
+        realization_pct: Number(row['אחוז מימוש'])                 || 0,
+      };
+    }
+
+    d.canopy_types = cmplxDetRows
+      .filter(r => String(r['סמל רשות']) === id && r['הערות'] === 'usg code is main usage')
+      .map(r => ({
+        type:            r['סיווג שימוש'],
+        potential_mw:    Number(r['הספק פוטנציאל מוערך לקירוי סולארי (MW)']) || 0,
+        installed_mw:    Number(r['הספק מותקן מוערך קיים (MW)'])              || 0,
+        realization_pct: Number(r['אחוז מימוש'])                              || 0,
+        sites:           Number(r['מספר מתחמים לקירוי'])                      || 0,
+      }))
+      .sort((a, b) => (CANOPY_META[a.type]?.order ?? 9) - (CANOPY_META[b.type]?.order ?? 9));
+
+    if (city.files.includes('bldg_neighborhood_general')) {
+      const [neighGenRows, neighDetRows, cmplxNeighRows] = await Promise.all([
+        fetchCSV(files.bldg_neighborhood_general.path),
+        fetchCSV(files.bldg_neighborhood_details.path),
+        fetchCSV(files.cmplx_neighborhood_general.path),
+      ]);
+
+      d.neighborhoods = neighGenRows
+        .filter(r => String(r['סמל רשות']) === id)
+        .map(r => ({
+          name:         r['שם שכונה'],
+          potential_kw: Number(r['הספק פוטנציאל מוערך (KW)'])   || 0,
+          installed_kw: Number(r['הספק מותקן מוערך קיים (KW)']) || 0,
+        }))
+        .filter(n => n.potential_kw > 0)
+        .sort((a, b) => b.potential_kw - a.potential_kw);
+
+      d.top10_municipal = neighDetRows
+        .filter(r =>
+          String(r['סמל רשות']) === id &&
+          r['הערות'] === 'usg code is main usage' &&
+          r['סיווג שימוש'] === 'רשות מקומית'
+        )
+        .map(r => ({
+          neighborhood:    r['שם שכונה'],
+          potential_kw:    Number(r['הספק פוטנציאל מוערך (KW)'])               || 0,
+          installed_kw:    Number(r['הספק מותקן מוערך קיים (KW)'])             || 0,
+          realization_pct: Number(r['אחוז מימוש'])                             || 0,
+          buildings:       Number(r['מספר מבנים'])                              || 0,
+          suitable_area:   Number(r['שטח פוטנציאל שנמצא מתאים לסולארי (מ"ר)']) || 0,
+        }))
+        .filter(t => t.potential_kw > 0)
+        .sort((a, b) => b.potential_kw - a.potential_kw)
+        .slice(0, 10);
+
+      d.canopy_neighborhoods = cmplxNeighRows
+        .filter(r => String(r['סמל רשות']) === id)
+        .map(r => ({
+          name:            r['שם שכונה'],
+          potential_kw:    Number(r['הספק פוטנציאל מוערך (KW)'])   || 0,
+          installed_kw:    Number(r['הספק מותקן מוערך קיים (KW)']) || 0,
+          realization_pct: Number(r['אחוז מימוש'])                 || 0,
+          sites:           Number(r['מספר מתחמים לקירוי סולארי'])  || 0,
+        }))
+        .filter(n => n.potential_kw > 0)
+        .sort((a, b) => b.potential_kw - a.potential_kw);
+    }
+
+    render(name, d);
+  } catch(e) {
+    document.getElementById('dashboard').innerHTML =
+      `<div class="empty"><div class="empty-icon">❌</div>שגיאה בטעינת נתונים: ${e.message}</div>`;
+    console.error(e);
+  }
+}
+
+// ── Canopy accordion ──────────────────────────────────────────────────────
+function toggleCanopy(header) {
+  const card      = header.closest('.canopy-v-card');
+  const accordion = card.querySelector('.canopy-accordion');
+  const isOpen    = card.classList.contains('active');
+
+  document.querySelectorAll('.canopy-v-card.active').forEach(c => {
+    c.classList.remove('active');
+    c.querySelector('.canopy-accordion').classList.remove('open');
+  });
+
+  if (!isOpen) {
+    card.classList.add('active');
+    accordion.classList.add('open');
+    setTimeout(() => accordion.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 360);
+  }
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+function badge(pct) {
+  const p = Number(pct) || 0;
+  if (p >= 20) return `<span class="badge hi">${p.toFixed(1)}%</span>`;
+  if (p >= 8)  return `<span class="badge mi">${p.toFixed(1)}%</span>`;
+  return `<span class="badge lo">${p.toFixed(1)}%</span>`;
+}
+
+function realizBg(pct) {
+  if (pct >= 20) return '#1D9E75';
+  if (pct >= 8)  return '#F5A623';
+  return '#E24B4A';
+}
+
+// ── Render ────────────────────────────────────────────────────────────────
+function render(name, d) {
+  // ── Land-use bars
+  const usageRows = Object.entries(d.usage)
+    .filter(([,v]) => v.potential_mw > 0)
+    .sort((a, b) => b[1].potential_mw - a[1].potential_mw);
+  const maxMW = usageRows[0]?.[1].potential_mw || 1;
+
+  const usageHTML = usageRows.map(([label, v]) => {
+    const potW  = Math.round(v.potential_mw / maxMW * 100);
+    const instW = v.potential_mw > 0 ? Math.round(v.installed_mw / v.potential_mw * potW) : 0;
+    const icon  = USAGE_ICONS[label] || USAGE_ICONS['אחר'];
+    return `<div class="usage-row">
+      <div class="usage-icon">${icon}</div>
+      <div class="usage-label">${label}</div>
+      <div class="bar-wrap">
+        <div class="bar-pot" style="width:${potW}%"></div>
+        <div class="bar-inst" style="width:${instW}%"></div>
+      </div>
+      <div class="usage-mw">${v.potential_mw.toFixed(1)} MW</div>
+      ${badge(v.realization_pct)}
+    </div>`;
+  }).join('');
+
+  // ── Rooftop neighborhood bars
+  const neigh = (d.neighborhoods || []).slice(0, 12);
+  const maxNeighKW = neigh[0]?.potential_kw || 1;
+  const neighHTML = neigh.map(n => {
+    const potW  = Math.round(n.potential_kw / maxNeighKW * 100);
+    const instW = n.potential_kw > 0 ? Math.round(n.installed_kw / n.potential_kw * potW) : 0;
+    return `<div class="neigh-row">
+      <div class="neigh-name" title="${n.name}">${n.name}</div>
+      <div class="neigh-bar-wrap">
+        <div class="neigh-bar-pot" style="width:${potW}%"></div>
+        <div class="neigh-bar-inst" style="width:${instW}%"></div>
+      </div>
+      <div class="neigh-val">${(n.potential_kw/1000).toFixed(1)} MW</div>
+    </div>`;
+  }).join('');
+
+  // ── Top-10 municipal table
+  const top10     = d.top10_municipal || [];
+  const top10HTML = top10.length
+    ? `<div class="top-table-wrap"><table class="top-table">
+        <thead><tr>
+          <th>#</th><th>שכונה / אזור</th>
+          <th>פוטנציאל</th><th>מותקן</th>
+          <th>מימוש</th><th>מבנים</th><th>שטח מתאים (מ"ר)</th>
+        </tr></thead>
+        <tbody>${top10.map((t, i) => `<tr>
+          <td><span class="rank-num">${i+1}</span></td>
+          <td style="font-weight:600">${t.neighborhood}</td>
+          <td>${Math.round(t.potential_kw).toLocaleString()} KW</td>
+          <td>${Math.round(t.installed_kw).toLocaleString()} KW</td>
+          <td>${badge(t.realization_pct)}</td>
+          <td>${t.buildings}</td>
+          <td>${Math.round(t.suitable_area).toLocaleString()}</td>
+        </tr>`).join('')}</tbody>
+      </table></div>`
+    : `<p style="color:#ccc;font-size:13px;padding:0.5rem 0">אין נתוני שכונות עבור סיווג רשות מקומית</p>`;
+
+  // ── Canopy neighborhood table (shared across all type cards)
+  const cn = d.canopy_neighborhoods || [];
+  const canopyNeighContent = cn.length
+    ? `<div class="table-scroll"><table class="canopy-neigh-table">
+        <thead><tr>
+          <th>שכונה</th><th>פוטנציאל (KW)</th><th>מותקן (KW)</th><th>מימוש</th><th>מתחמים</th>
+        </tr></thead>
+        <tbody>${cn.map(n => `<tr>
+          <td style="font-weight:600">${n.name}</td>
+          <td>${Math.round(n.potential_kw).toLocaleString()}</td>
+          <td>${Math.round(n.installed_kw).toLocaleString()}</td>
+          <td>${badge(n.realization_pct)}</td>
+          <td>${n.sites}</td>
+        </tr>`).join('')}</tbody>
+      </table></div>`
+    : `<p style="color:#ccc;font-size:13px">אין נתוני שכונות לרשות זו</p>`;
+
+  // ── Canopy type vertical cards
+  const canopyStackHTML = d.canopy_types.map(ct => {
+    const meta = CANOPY_META[ct.type] || { svg: CANOPY_META['פארקים'].svg };
+    return `
+      <div class="canopy-v-card" data-type="${ct.type}">
+        <div class="canopy-v-header" onclick="toggleCanopy(this)">
+          <div class="canopy-v-icon-box">${meta.svg}</div>
+          <div class="canopy-v-mw-section">
+            <div class="canopy-v-mw-row">
+              <span class="canopy-v-mw">${ct.potential_mw.toFixed(1)}</span>
+              <span class="canopy-v-mw-unit">MW</span>
+            </div>
+            <div class="canopy-v-inst">מותקן: <strong>${ct.installed_mw.toFixed(2)} MW</strong></div>
+          </div>
+          <div class="canopy-v-info">
+            <div class="canopy-v-name">${ct.type}</div>
+            <div class="canopy-v-sites">${ct.sites.toLocaleString()} מתחמים</div>
+            ${badge(ct.realization_pct)}
+          </div>
+          <div class="canopy-v-chevron">${CHEVRON_SVG}</div>
+        </div>
+        <div class="canopy-accordion">
+          <div class="canopy-accordion-inner">
+            <div class="accordion-hdr">
+              <div>
+                <div class="accordion-title">שכונות עם פוטנציאל קירוי</div>
+                <div class="accordion-note">סה"כ קירוי לכל שכונה — אין פירוט לפי סוג מתחם ברמת השכונה</div>
+              </div>
+              <button class="accordion-close" onclick="event.stopPropagation();this.closest('.canopy-v-card').classList.remove('active');this.closest('.canopy-accordion').classList.remove('open')">✕</button>
+            </div>
+            ${canopyNeighContent}
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  // ── Summary values
+  const totalPot = (d.potential_mw + d.cmplx_potential_mw).toFixed(1);
+  const realBg   = realizBg(d.realization_pct);
+
+  document.getElementById('dashboard').innerHTML = `
+    <div class="city-header">
+      <div class="city-name">${name}</div>
+      <div class="city-sub">${d.buildings.toLocaleString()} מבנים · ${d.roof_area.toLocaleString()} דונם שטח גגות</div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card accent">
+        <div class="stat-lbl">פוטנציאל גגות</div>
+        <div class="stat-val-row">
+          <span class="stat-val">${d.potential_mw.toFixed(1)}</span>
+          <span class="stat-unit">MW</span>
+        </div>
+        <div class="stat-sub">${d.suitable_area.toFixed(0)} דונם שטח מתאים</div>
+      </div>
+      <div class="stat-card accent">
+        <div class="stat-lbl">פוטנציאל קירוי פתוח</div>
+        <div class="stat-val-row">
+          <span class="stat-val">${d.cmplx_potential_mw.toFixed(1)}</span>
+          <span class="stat-unit">MW</span>
+        </div>
+        <div class="stat-sub">${d.cmplx_sites} מתחמים</div>
+      </div>
+      <div class="stat-card accent">
+        <div class="stat-lbl">סה"כ פוטנציאל</div>
+        <div class="stat-val-row">
+          <span class="stat-val">${totalPot}</span>
+          <span class="stat-unit">MW</span>
+        </div>
+        <div class="stat-sub">גגות + קירוי פתוח</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">מותקן קיים</div>
+        <div class="stat-val-row">
+          <span class="stat-val">${d.installed_mw.toFixed(1)}</span>
+          <span class="stat-unit">MW</span>
+        </div>
+        <div class="stat-sub">דו-שימוש חח"י: ${d.dual_use_mw.toFixed(1)} MW</div>
+      </div>
+      <div class="stat-card real-card" style="background:${realBg}">
+        <div class="stat-lbl">אחוז מימוש</div>
+        <div class="stat-val-row">
+          <span class="stat-val">${d.realization_pct.toFixed(1)}</span>
+          <span class="stat-unit">%</span>
+        </div>
+        <div class="real-mini-bar">
+          <div class="real-mini-fill" style="width:${Math.min(d.realization_pct,100)}%"></div>
+        </div>
+        <div class="stat-sub">מהפוטנציאל הגגי</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="section-label"><span>פוטנציאל לפי שימוש קרקע</span></div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#1a2e4a"></div>פוטנציאל</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#F5A623"></div>מותקן</div>
+        </div>
+        ${usageHTML || '<p style="color:#ccc;font-size:13px">אין נתונים</p>'}
+      </div>
+      <div class="card">
+        <div class="section-label"><span>פוטנציאל גגות לפי שכונה</span></div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#1a2e4a"></div>פוטנציאל</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#F5A623"></div>מותקן</div>
+        </div>
+        <div class="neigh-rows">
+          ${neigh.length ? neighHTML : '<p style="color:#ccc;font-size:13px">אין נתוני שכונות</p>'}
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label"><span>🏛 אתרי הרשות המקומית עם הפוטנציאל הגבוה ביותר</span></div>
+      ${top10HTML}
+    </div>
+
+    <div class="card">
+      <div class="section-label"><span>קירוי סולארי פתוח — לפי סוג מתחם</span></div>
+      <div class="canopy-stack">
+        ${canopyStackHTML || '<p style="color:#ccc;font-size:13px">אין נתוני קירוי</p>'}
+      </div>
+    </div>
+  `;
+}
+</script>
+</body>
+</html>

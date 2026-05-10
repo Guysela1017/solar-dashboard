@@ -1,0 +1,3273 @@
+{
+  "meta": {
+    "base_url": "https://raw.githubusercontent.com/Guysela1017/solar-dashboard/main/",
+    "city_column": "שם רשות מקומית",
+    "id_column": "סמל רשות",
+    "files": {
+      "bldg_settlement_general": {
+        "path": "BldgEnergyTBL/generalRoofSetlEnergyTBL.csv",
+        "url": "https://raw.githubusercontent.com/Guysela1017/solar-dashboard/main/BldgEnergyTBL/generalRoofSetlEnergyTBL.csv",
+        "level": "municipality",
+        "domain": "rooftop",
+        "city_filter_column": "שם רשות מקומית",
+        "id_filter_column": "סמל רשות",
+        "description": "Rooftop solar — municipality level — overall summary",
+        "filters": [],
+        "columns": {
+          "סמל רשות": "Municipality code (unique ID)",
+          "מספר סידורי": "Serial number",
+          "שם רשות מקומית": "Municipality name (Hebrew)",
+          "שטח שיפוט (דונם)": "Total jurisdiction area (dunams)",
+          "שטח תפוס על ידי לוחות סולאריים (דונם)": "Area already covered by solar panels (dunams)",
+          "מספר מבנים": "Number of buildings",
+          "שטח גגות כולל (דונם)": "Total roof area (dunams)",
+          "שטח פוטנציאל שנמצא מתאים לסולארי (דונם)": "Roof area suitable for solar installation (dunams)",
+          "שטח לא פנוי (דונם)": "Roof area unavailable — shaded or obstructed (dunams)",
+          "הספק מותקן מוערך קיים (MW)": "Estimated currently installed capacity (MW)",
+          "אחוז מימוש": "Realisation rate — installed / potential (%)",
+          "הספק פוטנציאל מוערך (MW)": "Estimated potential capacity (MW)",
+          "הספק מותקן דו שימוש חח\"י": "Dual-use installed capacity — IEC grid (MW)"
+        }
+      },
+      "bldg_settlement_details": {
+        "path": "BldgEnergyTBL/detailsRoofSetlEnergyTBL.csv",
+        "url": "https://raw.githubusercontent.com/Guysela1017/solar-dashboard/main/BldgEnergyTBL/detailsRoofSetlEnergyTBL.csv",
+        "level": "municipality",
+        "domain": "rooftop",
+        "city_filter_column": "שם רשות מקומית",
+        "id_filter_column": "סמל רשות",
+        "description": "Rooftop solar — municipality level — breakdown by land-use category",
+        "filters": [
+          {
+            "column": "הערות",
+            "operator": "eq",
+            "value": "usg code is main usage",
+            "description": "Keep only the 8 main land-use categories; sub-categories are excluded"
+          }
+        ],
+        "land_use_values": [
+          "מגורים",
+          "תעשייה",
+          "מסחר, משרדים ותיירות",
+          "ציבורי",
+          "רשות מקומית",
+          "חקלאות",
+          "תשתיות ומתקנים הנדסיים",
+          "אחר"
+        ],
+        "columns": {
+          "סמל רשות": "Municipality code (unique ID)",
+          "מספר סידורי": "Serial number",
+          "שם רשות מקומית": "Municipality name (Hebrew)",
+          "שטח שיפוט (דונם)": "Total jurisdiction area (dunams)",
+          "שטח תפוס על ידי לוחות סולאריים (דונם)": "Area covered by solar panels — this category (dunams)",
+          "מספר מבנים": "Number of buildings in this land-use category",
+          "שטח גגות כולל (דונם)": "Total roof area for this land-use category (dunams)",
+          "שטח פוטנציאל שנמצא מתאים לסולארי (דונם)": "Roof area suitable for solar — this category (dunams)",
+          "שטח לא פנוי (דונם)": "Roof area unavailable — this category (dunams)",
+          "הספק מותקן מוערך קיים (MW)": "Estimated installed capacity — this category (MW)",
+          "אחוז מימוש": "Realisation rate — this category (%)",
+          "הספק פוטנציאל מוערך (MW)": "Estimated potential capacity — this category (MW)",
+          "סיווג שימוש": "Land-use category name",
+          "הערות": "Filter flag — 'usg code is main usage' marks main-category rows"
+        }
+      },
+      "bldg_neighborhood_general": {
+        "path": "BldgEnergyTBL/generalRoofNeigEnergyTBL.csv",
+        "url": "https://raw.githubusercontent.com/Guysela1017/solar-dashboard/main/BldgEnergyTBL/generalRoofNeigEnergyTBL.csv",
+        "level": "neighborhood",
+        "domain": "rooftop",
+        "city_filter_column": "שם רשות מקומית",
+        "id_filter_column": "סמל רשות",
+        "description": "Rooftop solar — neighborhood level — overall summary per neighborhood",
+        "filters": [],
+        "note": "Name spellings differ from settlement file; prefer filtering by סמל רשות",
+        "columns": {
+          "מספר סידורי": "Serial number",
+          "סמל רשות": "Municipality code (unique ID)",
+          "שם רשות מקומית": "Municipality name (Hebrew)",
+          "שם שכונה": "Neighborhood name",
+          "שטח שכונה (מ\"ר)": "Neighborhood area (sq meters)",
+          "שטח תפוס על ידי לוחות סולאריים (מ\"ר)": "Area covered by solar panels (sq meters)",
+          "מספר מבנים": "Number of buildings in neighborhood",
+          "שטח גגות כולל (מ\"ר)": "Total roof area in neighborhood (sq meters)",
+          "שטח פוטנציאל שנמצא מתאים לסולארי (מ\"ר)": "Roof area suitable for solar (sq meters)",
+          "שטח לא פנוי (מ\"ר)": "Roof area unavailable (sq meters)",
+          "הספק מותקן מוערך קיים (KW)": "Estimated installed capacity (KW)",
+          "אחוז מימוש": "Realisation rate (%)",
+          "הספק פוטנציאל מוערך (KW)": "Estimated potential capacity (KW)"
+        }
+      },
+      "bldg_neighborhood_details": {
+        "path": "BldgEnergyTBL/detailsRoofNeigEnergyTBL.csv",
+        "url": "https://raw.githubusercontent.com/Guysela1017/solar-dashboard/main/BldgEnergyTBL/detailsRoofNeigEnergyTBL.csv",
+        "level": "neighborhood",
+        "domain": "rooftop",
+        "city_filter_column": "שם רשות מקומית",
+        "id_filter_column": "סמל רשות",
+        "description": "Rooftop solar — neighborhood level — breakdown by land-use category",
+        "filters": [
+          {
+            "column": "הערות",
+            "operator": "eq",
+            "value": "usg code is main usage",
+            "description": "Keep only main land-use category rows"
+          }
+        ],
+        "note": "Name spellings differ from settlement file; prefer filtering by סמל רשות",
+        "columns": {
+          "מספר סידורי": "Serial number",
+          "סמל רשות": "Municipality code (unique ID)",
+          "שם רשות מקומית": "Municipality name (Hebrew)",
+          "שם שכונה": "Neighborhood name",
+          "שטח שכונה": "Neighborhood area (sq meters)",
+          "שטח תפוס על ידי לוחות סולאריים (מ\"ר)": "Area covered by solar panels (sq meters)",
+          "מספר מבנים": "Number of buildings — this category",
+          "שטח גגות כולל (מ\"ר)": "Total roof area — this category (sq meters)",
+          "שטח פוטנציאל שנמצא מתאים לסולארי (מ\"ר)": "Roof area suitable for solar — this category (sq meters)",
+          "שטח לא פנוי (מ\"ר)": "Roof area unavailable — this category (sq meters)",
+          "הספק מותקן מוערך קיים (KW)": "Estimated installed capacity — this category (KW)",
+          "אחוז מימוש": "Realisation rate — this category (%)",
+          "הספק פוטנציאל מוערך (KW)": "Estimated potential capacity — this category (KW)",
+          "סיווג שימוש": "Land-use category name",
+          "הערות": "Filter flag — 'usg code is main usage' marks main-category rows"
+        }
+      },
+      "cmplx_settlement_general": {
+        "path": "CmplxEnergyTBL/generalRoofSetlEnergyTBL.csv",
+        "url": "https://raw.githubusercontent.com/Guysela1017/solar-dashboard/main/CmplxEnergyTBL/generalRoofSetlEnergyTBL.csv",
+        "level": "municipality",
+        "domain": "canopy",
+        "city_filter_column": "שם רשות מקומית",
+        "id_filter_column": "סמל רשות",
+        "description": "Open-space canopy solar — municipality level — overall summary",
+        "filters": [],
+        "columns": {
+          "סמל רשות": "Municipality code (unique ID)",
+          "מספר סידורי": "Serial number",
+          "שם רשות מקומית": "Municipality name (Hebrew)",
+          "שטח שיפוט (דונם)": "Total jurisdiction area (dunams)",
+          "מספר מתחמים לקירוי סולארי": "Number of open-space complexes suitable for canopy solar",
+          "שטח מתחמים לקירוי סולארי": "Total area of complexes suitable for canopy solar",
+          "שטח פוטנציאל שנמצא מתאים לקירוי סולארי (מ\"ר)": "Area within complexes suitable for solar canopy (sq meters)",
+          "הספק פוטנציאל מוערך (MW)": "Estimated potential canopy capacity (MW)",
+          "שטח לא פנוי (דונם)": "Area unavailable for canopy installation (dunams)",
+          "שטח תפוס על ידי לוחות סולאריים (דונם)": "Area already covered by solar panels (dunams)",
+          "הספק מותקן מוערך קיים (MW)": "Estimated installed canopy capacity (MW)",
+          "אחוז מימוש": "Realisation rate (%)"
+        }
+      },
+      "cmplx_settlement_details": {
+        "path": "CmplxEnergyTBL/detailsRoofSetlEnergyTBL.csv",
+        "url": "https://raw.githubusercontent.com/Guysela1017/solar-dashboard/main/CmplxEnergyTBL/detailsRoofSetlEnergyTBL.csv",
+        "level": "municipality",
+        "domain": "canopy",
+        "city_filter_column": "שם רשות מקומית",
+        "id_filter_column": "סמל רשות",
+        "description": "Open-space canopy solar — municipality level — breakdown by canopy-use type",
+        "filters": [
+          {
+            "column": "הערות",
+            "operator": "eq",
+            "value": "usg code is main usage",
+            "description": "Keep only main canopy-use category rows"
+          }
+        ],
+        "canopy_use_values": [
+          "חניון ציבורי",
+          "מגרש ספורט",
+          "חניון תחבורה ומסופים",
+          "בית עלמין",
+          "פארקים"
+        ],
+        "columns": {
+          "סמל רשות": "Municipality code (unique ID)",
+          "מספר סידורי": "Serial number",
+          "שם רשות מקומית": "Municipality name (Hebrew)",
+          "שטח שיפוט (דונם)": "Total jurisdiction area (dunams)",
+          "מספר מתחמים לקירוי": "Number of complexes — this canopy-use category",
+          "שטח מתחמים לקירוי": "Area of complexes — this canopy-use category",
+          "שטח פוטנציאל שנמצא מתאים לקירוי סולארי (דונם)": "Area suitable for solar canopy — this category (dunams)",
+          "הספק פוטנציאל מוערך לקירוי סולארי (MW)": "Estimated potential capacity — this category (MW)",
+          "שטח לא פנוי (דונם)": "Area unavailable — this category (dunams)",
+          "שטח תפוס על ידי לוחות סולאריים (דונם)": "Area covered by solar panels — this category (dunams)",
+          "הספק מותקן מוערך קיים (MW)": "Estimated installed capacity — this category (MW)",
+          "אחוז מימוש": "Realisation rate — this category (%)",
+          "סיווג שימוש": "Canopy-use category name",
+          "הערות": "Filter flag — 'usg code is main usage' marks main-category rows"
+        }
+      },
+      "cmplx_neighborhood_general": {
+        "path": "CmplxEnergyTBL/generalRoofNeigEnergyTBL.csv",
+        "url": "https://raw.githubusercontent.com/Guysela1017/solar-dashboard/main/CmplxEnergyTBL/generalRoofNeigEnergyTBL.csv",
+        "level": "neighborhood",
+        "domain": "canopy",
+        "city_filter_column": "שם רשות מקומית",
+        "id_filter_column": "סמל רשות",
+        "description": "Open-space canopy solar — neighborhood level — overall summary per neighborhood",
+        "filters": [],
+        "note": "Name spellings differ from settlement file; prefer filtering by סמל רשות",
+        "columns": {
+          "מספר סידורי": "Serial number",
+          "סמל רשות": "Municipality code (unique ID)",
+          "שם רשות מקומית": "Municipality name (Hebrew)",
+          "שם שכונה": "Neighborhood name",
+          "שטח שכונה": "Neighborhood area (sq meters)",
+          "מספר מתחמים לקירוי סולארי": "Number of open-space complexes suitable for canopy solar",
+          "שטח מתחמים לקירוי סולארי": "Area of complexes suitable for canopy solar",
+          "שטח פוטנציאל שנמצא מתאים לקירוי סולארי (מ\"ר)": "Area suitable for solar canopy in neighborhood (sq meters)",
+          "הספק פוטנציאל מוערך (KW)": "Estimated potential canopy capacity (KW)",
+          "שטח לא פנוי (מ\"ר)": "Area unavailable for canopy (sq meters)",
+          "שטח תפוס על ידי לוחות סולאריים (מ\"ר)": "Area covered by solar panels (sq meters)",
+          "הספק מותקן מוערך קיים (KW)": "Estimated installed canopy capacity (KW)",
+          "אחוז מימוש": "Realisation rate (%)"
+        }
+      }
+    },
+    "filters": {
+      "by_city_name": {
+        "column": "שם רשות מקומית",
+        "operator": "eq",
+        "description": "Filter rows where this column exactly matches the selected city name (use for settlement-level files)"
+      },
+      "by_city_id": {
+        "column": "סמל רשות",
+        "operator": "eq",
+        "description": "Filter rows by municipality code — preferred for neighborhood-level files where name spellings differ"
+      },
+      "main_land_use_only": {
+        "column": "הערות",
+        "operator": "eq",
+        "value": "usg code is main usage",
+        "description": "In detail files: keep only rows where הערות equals this value to get the 8 main land-use or 5 canopy-use categories; sub-types are excluded"
+      }
+    }
+  },
+  "cities": {
+    "אבו גוש": {
+      "id": 472,
+      "name_he": "אבו גוש",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "אבו סנאן": {
+      "id": 473,
+      "name_he": "אבו סנאן",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "אבן יהודה": {
+      "id": 182,
+      "name_he": "אבן יהודה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "אום אל פחם": {
+      "id": 2710,
+      "name_he": "אום אל פחם",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "אופקים": {
+      "id": 31,
+      "name_he": "אופקים",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "אור יהודה": {
+      "id": 2400,
+      "name_he": "אור יהודה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "אור עקיבא": {
+      "id": 1020,
+      "name_he": "אור עקיבא",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "אורנית": {
+      "id": 3760,
+      "name_he": "אורנית",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "אזור": {
+      "id": 565,
+      "name_he": "אזור",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "אילת": {
+      "id": 2600,
+      "name_he": "אילת",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "אכסאל": {
+      "id": 478,
+      "name_he": "אכסאל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "אל בטוף": {
+      "id": 5565,
+      "name_he": "אל בטוף",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "אל קסום": {
+      "id": 5569,
+      "name_he": "אל קסום",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "אלונה": {
+      "id": 5545,
+      "name_he": "אלונה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "אליכין": {
+      "id": 41,
+      "name_he": "אליכין",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "אלעד": {
+      "id": 1309,
+      "name_he": "אלעד",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "אלפי מנשה": {
+      "id": 3750,
+      "name_he": "אלפי מנשה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "אלקנה": {
+      "id": 3560,
+      "name_he": "אלקנה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "אעבלין": {
+      "id": 529,
+      "name_he": "אעבלין",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "אפרת": {
+      "id": 3650,
+      "name_he": "אפרת",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "אריאל": {
+      "id": 3570,
+      "name_he": "אריאל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "אשדוד": {
+      "id": 70,
+      "name_he": "אשדוד",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "אשכול": {
+      "id": 5538,
+      "name_he": "אשכול",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "אשקלון": {
+      "id": 7100,
+      "name_he": "אשקלון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "באקה אל גרבייה (באקה אל ררבי": {
+      "id": 6000,
+      "name_he": "באקה אל גרבייה (באקה אל ררבי",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "באר טוביה": {
+      "id": 5533,
+      "name_he": "באר טוביה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "באר יעקב": {
+      "id": 2530,
+      "name_he": "באר יעקב",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "באר שבע": {
+      "id": 9000,
+      "name_he": "באר שבע",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "בוסתאן אל מרג'": {
+      "id": 5566,
+      "name_he": "בוסתאן אל מרג'",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "בועיינה - נוג'ידאת": {
+      "id": 482,
+      "name_he": "בועיינה - נוג'ידאת",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "בוקעאתא": {
+      "id": 4001,
+      "name_he": "בוקעאתא",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "ביר אל מכסור": {
+      "id": 998,
+      "name_he": "ביר אל מכסור",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "בית אל": {
+      "id": 3574,
+      "name_he": "בית אל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "בית אריה - עופרים": {
+      "id": 3652,
+      "name_he": "בית אריה - עופרים",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "בית ג'ן": {
+      "id": 480,
+      "name_he": "בית ג'ן",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "בית דגן": {
+      "id": 466,
+      "name_he": "בית דגן",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "בית שאן": {
+      "id": 9200,
+      "name_he": "בית שאן",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "בית שמש": {
+      "id": 2610,
+      "name_he": "בית שמש",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "ביתר עילית": {
+      "id": 3780,
+      "name_he": "ביתר עילית",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "בני ברק": {
+      "id": 6100,
+      "name_he": "בני ברק",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "בני עי\"ש": {
+      "id": 1066,
+      "name_he": "בני עי\"ש",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "בני שמעון": {
+      "id": 5541,
+      "name_he": "בני שמעון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "בנימינה - גבעת עדה": {
+      "id": 9800,
+      "name_he": "בנימינה - גבעת עדה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "בסמ\"ה": {
+      "id": 1326,
+      "name_he": "בסמ\"ה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "בסמת טבעון": {
+      "id": 944,
+      "name_he": "בסמת טבעון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "בענה": {
+      "id": 483,
+      "name_he": "בענה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "בקעת הירדן": {
+      "id": 5575,
+      "name_he": "בקעת הירדן",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "ברנר": {
+      "id": 5528,
+      "name_he": "ברנר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "בת ים": {
+      "id": 6200,
+      "name_he": "בת ים",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "ג'דיידה - מכר": {
+      "id": 1292,
+      "name_he": "ג'דיידה - מכר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "ג'וליס": {
+      "id": 485,
+      "name_he": "ג'וליס",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "ג'לג'וליה": {
+      "id": 627,
+      "name_he": "ג'לג'וליה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "ג'סר אל-זרקא": {
+      "id": 541,
+      "name_he": "ג'סר אל-זרקא",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "ג'ת": {
+      "id": 628,
+      "name_he": "ג'ת",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "גבעת זאב": {
+      "id": 3730,
+      "name_he": "גבעת זאב",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "גבעת שמואל": {
+      "id": 681,
+      "name_he": "גבעת שמואל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "גבעתיים": {
+      "id": 6300,
+      "name_he": "גבעתיים",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "גדרה": {
+      "id": 2550,
+      "name_he": "גדרה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "גדרות": {
+      "id": 5532,
+      "name_he": "גדרות",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "גולן": {
+      "id": 5571,
+      "name_he": "גולן",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "גוש חלב (ג'יש)": {
+      "id": 487,
+      "name_he": "גוש חלב (ג'יש)",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "גוש עציון": {
+      "id": 5576,
+      "name_he": "גוש עציון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "גזר": {
+      "id": 5530,
+      "name_he": "גזר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "גן יבנה": {
+      "id": 166,
+      "name_he": "גן יבנה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "גן רוה": {
+      "id": 5527,
+      "name_he": "גן רוה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "גני תקווה": {
+      "id": 229,
+      "name_he": "גני תקווה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "דאלית אל כרמל": {
+      "id": 494,
+      "name_he": "דאלית אל כרמל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "דבוריה": {
+      "id": 489,
+      "name_he": "דבוריה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "דימונה": {
+      "id": 2200,
+      "name_he": "דימונה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "דיר אל אסד": {
+      "id": 490,
+      "name_he": "דיר אל אסד",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "דיר חנא": {
+      "id": 492,
+      "name_he": "דיר חנא",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "דרום השרון": {
+      "id": 5520,
+      "name_he": "דרום השרון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "הגלבוע": {
+      "id": 5508,
+      "name_he": "הגלבוע",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "הגליל העליון": {
+      "id": 5501,
+      "name_he": "הגליל העליון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "הגליל התחתון": {
+      "id": 5503,
+      "name_he": "הגליל התחתון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "הוד השרון": {
+      "id": 9700,
+      "name_he": "הוד השרון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "הערבה התיכונה": {
+      "id": 5554,
+      "name_he": "הערבה התיכונה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "הר אדר": {
+      "id": 3769,
+      "name_he": "הר אדר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "הר חברון": {
+      "id": 5578,
+      "name_he": "הר חברון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "הרצליה": {
+      "id": 6400,
+      "name_he": "הרצליה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "זבולון": {
+      "id": 5512,
+      "name_he": "זבולון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "זכרון יעקב": {
+      "id": 9300,
+      "name_he": "זכרון יעקב",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "זמר": {
+      "id": 1290,
+      "name_he": "זמר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "זרזיר": {
+      "id": 975,
+      "name_he": "זרזיר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "חבל אילות": {
+      "id": 5553,
+      "name_he": "חבל אילות",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "חבל יבנה": {
+      "id": 5529,
+      "name_he": "חבל יבנה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "חבל מודיעין": {
+      "id": 5525,
+      "name_he": "חבל מודיעין",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "חדרה": {
+      "id": 6500,
+      "name_he": "חדרה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "חולון": {
+      "id": 6600,
+      "name_he": "חולון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "חוף אשקלון": {
+      "id": 5536,
+      "name_he": "חוף אשקלון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "חוף הכרמל": {
+      "id": 5515,
+      "name_he": "חוף הכרמל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "חוף השרון": {
+      "id": 5519,
+      "name_he": "חוף השרון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "חורה": {
+      "id": 1303,
+      "name_he": "חורה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "חורפיש": {
+      "id": 496,
+      "name_he": "חורפיש",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "חיפה": {
+      "id": 4000,
+      "name_he": "חיפה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "חצור הגלילית": {
+      "id": 2034,
+      "name_he": "חצור הגלילית",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "חריש": {
+      "id": 1247,
+      "name_he": "חריש",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "טבריה": {
+      "id": 6700,
+      "name_he": "טבריה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "טובא - זנגרייה": {
+      "id": 962,
+      "name_he": "טובא - זנגרייה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "טורעאן": {
+      "id": 498,
+      "name_he": "טורעאן",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "טייבה": {
+      "id": 2730,
+      "name_he": "טייבה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "טירה": {
+      "id": 2720,
+      "name_he": "טירה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "טירת כרמל": {
+      "id": 2100,
+      "name_he": "טירת כרמל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "טמרה": {
+      "id": 8900,
+      "name_he": "טמרה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "יאנוח - ג'ת": {
+      "id": 1295,
+      "name_he": "יאנוח - ג'ת",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "יבנאל": {
+      "id": 46,
+      "name_he": "יבנאל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "יבנה": {
+      "id": 2660,
+      "name_he": "יבנה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "יהוד-מונוסון": {
+      "id": 9400,
+      "name_he": "יהוד-מונוסון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "יואב": {
+      "id": 5535,
+      "name_he": "יואב",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "יסוד המעלה": {
+      "id": 29,
+      "name_he": "יסוד המעלה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "יפיע": {
+      "id": 499,
+      "name_he": "יפיע",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "יקנעם עילית": {
+      "id": 240,
+      "name_he": "יקנעם עילית",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "ירוחם": {
+      "id": 831,
+      "name_he": "ירוחם",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "ירושלים": {
+      "id": 3000,
+      "name_he": "ירושלים",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "ירכא": {
+      "id": 502,
+      "name_he": "ירכא",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "כאבול": {
+      "id": 504,
+      "name_he": "כאבול",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "כאוכב אבו אל היג'א": {
+      "id": 505,
+      "name_he": "כאוכב אבו אל היג'א",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "כוכב יאיר": {
+      "id": 1224,
+      "name_he": "כוכב יאיר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "כסייפה": {
+      "id": 1059,
+      "name_he": "כסייפה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "כסרא - סמיע": {
+      "id": 1296,
+      "name_he": "כסרא - סמיע",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "כעביה - טבאש - חג'אג'רה": {
+      "id": 978,
+      "name_he": "כעביה - טבאש - חג'אג'רה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "כפר ברא": {
+      "id": 633,
+      "name_he": "כפר ברא",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "כפר ורדים": {
+      "id": 1263,
+      "name_he": "כפר ורדים",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "כפר יאסיף": {
+      "id": 507,
+      "name_he": "כפר יאסיף",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "כפר יונה": {
+      "id": 168,
+      "name_he": "כפר יונה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "כפר כמא": {
+      "id": 508,
+      "name_he": "כפר כמא",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "כפר כנא": {
+      "id": 509,
+      "name_he": "כפר כנא",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "כפר מנדא": {
+      "id": 510,
+      "name_he": "כפר מנדא",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "כפר סבא": {
+      "id": 6900,
+      "name_he": "כפר סבא",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "כפר קאסם": {
+      "id": 634,
+      "name_he": "כפר קאסם",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "כפר קרע": {
+      "id": 654,
+      "name_he": "כפר קרע",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "כפר שמריהו": {
+      "id": 267,
+      "name_he": "כפר שמריהו",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "כפר תבור": {
+      "id": 47,
+      "name_he": "כפר תבור",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "כרמיאל": {
+      "id": 1139,
+      "name_he": "כרמיאל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "לב השרון": {
+      "id": 5518,
+      "name_he": "לב השרון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "להבים": {
+      "id": 1271,
+      "name_he": "להבים",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "לוד": {
+      "id": 7000,
+      "name_he": "לוד",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "לכיש": {
+      "id": 5550,
+      "name_he": "לכיש",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "לקיה": {
+      "id": 1060,
+      "name_he": "לקיה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "מבואות החרמון": {
+      "id": 5555,
+      "name_he": "מבואות החרמון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מבשרת ציון": {
+      "id": 1015,
+      "name_he": "מבשרת ציון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "מג'ד אל כרום": {
+      "id": 516,
+      "name_he": "מג'ד אל כרום",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "מג'דל שמס": {
+      "id": 4201,
+      "name_he": "מג'דל שמס",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מגאר": {
+      "id": 481,
+      "name_he": "מגאר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "מגדל": {
+      "id": 65,
+      "name_he": "מגדל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מגדל העמק": {
+      "id": 874,
+      "name_he": "מגדל העמק",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "מגדל תפן": {
+      "id": 1722,
+      "name_he": "מגדל תפן",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מגידו": {
+      "id": 5513,
+      "name_he": "מגידו",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מגילות ים המלח": {
+      "id": 5574,
+      "name_he": "מגילות ים המלח",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מודיעין - מכבים - רעות": {
+      "id": 1200,
+      "name_he": "מודיעין - מכבים - רעות",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "מודיעין עלית": {
+      "id": 3797,
+      "name_he": "מודיעין עלית",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "מזכרת בתיה": {
+      "id": 28,
+      "name_he": "מזכרת בתיה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "מזרעה": {
+      "id": 517,
+      "name_he": "מזרעה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מטה אשר": {
+      "id": 5504,
+      "name_he": "מטה אשר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מטה בנימין": {
+      "id": 5573,
+      "name_he": "מטה בנימין",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מטה יהודה": {
+      "id": 5526,
+      "name_he": "מטה יהודה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מטולה": {
+      "id": 43,
+      "name_he": "מטולה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מיתר": {
+      "id": 1268,
+      "name_he": "מיתר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "מנשה": {
+      "id": 5514,
+      "name_he": "מנשה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מסעדה": {
+      "id": 4203,
+      "name_he": "מסעדה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מעיליא": {
+      "id": 518,
+      "name_he": "מעיליא",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "מעלה אדומים": {
+      "id": 3616,
+      "name_he": "מעלה אדומים",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "מעלה אפרים": {
+      "id": 3608,
+      "name_he": "מעלה אפרים",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מעלה יוסף": {
+      "id": 5552,
+      "name_he": "מעלה יוסף",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מעלה עירון": {
+      "id": 1327,
+      "name_he": "מעלה עירון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "מעלות - תרשיחא": {
+      "id": 1063,
+      "name_he": "מעלות - תרשיחא",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "מצפה רמון": {
+      "id": 99,
+      "name_he": "מצפה רמון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "מרום הגליל": {
+      "id": 5502,
+      "name_he": "מרום הגליל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "מרחבים": {
+      "id": 5542,
+      "name_he": "מרחבים",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "משגב": {
+      "id": 5556,
+      "name_he": "משגב",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "משהד": {
+      "id": 520,
+      "name_he": "משהד",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "נאות חובב": {
+      "id": 1770,
+      "name_he": "נאות חובב",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "נהריה": {
+      "id": 9100,
+      "name_he": "נהריה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "נווה מדבר": {
+      "id": 5568,
+      "name_he": "נווה מדבר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "נוף הגליל": {
+      "id": 1061,
+      "name_he": "נוף הגליל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "נחל שורק": {
+      "id": 5531,
+      "name_he": "נחל שורק",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "נחף": {
+      "id": 522,
+      "name_he": "נחף",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "נס ציונה": {
+      "id": 7200,
+      "name_he": "נס ציונה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "נצרת": {
+      "id": 7300,
+      "name_he": "נצרת",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "נשר": {
+      "id": 2500,
+      "name_he": "נשר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "נתיבות": {
+      "id": 246,
+      "name_he": "נתיבות",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "נתניה": {
+      "id": 7400,
+      "name_he": "נתניה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "סאג'ור": {
+      "id": 525,
+      "name_he": "סאג'ור",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "סביון": {
+      "id": 587,
+      "name_he": "סביון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "סח'נין": {
+      "id": 7500,
+      "name_he": "סח'נין",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "עומר": {
+      "id": 666,
+      "name_he": "עומר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "עוספייא": {
+      "id": 534,
+      "name_he": "עוספייא",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "עילבון": {
+      "id": 530,
+      "name_he": "עילבון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "עילוט": {
+      "id": 511,
+      "name_he": "עילוט",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "עין מאהל": {
+      "id": 532,
+      "name_he": "עין מאהל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "עין קיניה": {
+      "id": 4502,
+      "name_he": "עין קיניה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "עכו": {
+      "id": 7600,
+      "name_he": "עכו",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "עמנואל": {
+      "id": 3660,
+      "name_he": "עמנואל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "עמק הירדן": {
+      "id": 5506,
+      "name_he": "עמק הירדן",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "עמק המעיינות": {
+      "id": 5507,
+      "name_he": "עמק המעיינות",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "עמק חפר": {
+      "id": 5516,
+      "name_he": "עמק חפר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "עמק יזרעאל": {
+      "id": 5509,
+      "name_he": "עמק יזרעאל",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "עפולה": {
+      "id": 7700,
+      "name_he": "עפולה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "עראבה": {
+      "id": 531,
+      "name_he": "עראבה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "ערד": {
+      "id": 2560,
+      "name_he": "ערד",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "ערערה": {
+      "id": 637,
+      "name_he": "ערערה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "ערערה בנגב": {
+      "id": 1192,
+      "name_he": "ערערה בנגב",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "פוריידיס": {
+      "id": 537,
+      "name_he": "פוריידיס",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "פסוטה": {
+      "id": 535,
+      "name_he": "פסוטה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "פקיעין (בוקייעה)": {
+      "id": 536,
+      "name_he": "פקיעין (בוקייעה)",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "פרדס חנה - כרכור": {
+      "id": 7800,
+      "name_he": "פרדס חנה - כרכור",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "פרדסיה": {
+      "id": 171,
+      "name_he": "פרדסיה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "פתח תקווה": {
+      "id": 7900,
+      "name_he": "פתח תקווה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "צור הדסה": {
+      "id": 1113,
+      "name_he": "צור הדסה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "צפת": {
+      "id": 8000,
+      "name_he": "צפת",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קדומים": {
+      "id": 3557,
+      "name_he": "קדומים",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "קדימה - צורן": {
+      "id": 195,
+      "name_he": "קדימה - צורן",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קלנסווה": {
+      "id": 638,
+      "name_he": "קלנסווה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קצרין": {
+      "id": 4100,
+      "name_he": "קצרין",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קרית אונו": {
+      "id": 2620,
+      "name_he": "קרית אונו",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קרית ארבע": {
+      "id": 3611,
+      "name_he": "קרית ארבע",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "קרית אתא": {
+      "id": 6800,
+      "name_he": "קרית אתא",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קרית ביאליק": {
+      "id": 9500,
+      "name_he": "קרית ביאליק",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קרית גת": {
+      "id": 2630,
+      "name_he": "קרית גת",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קרית טבעון": {
+      "id": 2300,
+      "name_he": "קרית טבעון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קרית ים": {
+      "id": 9600,
+      "name_he": "קרית ים",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קרית יערים": {
+      "id": 1137,
+      "name_he": "קרית יערים",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קרית מוצקין": {
+      "id": 8200,
+      "name_he": "קרית מוצקין",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קרית מלאכי": {
+      "id": 1034,
+      "name_he": "קרית מלאכי",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קרית עקרון": {
+      "id": 469,
+      "name_he": "קרית עקרון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קרית שמונה": {
+      "id": 2800,
+      "name_he": "קרית שמונה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "קרני שומרון": {
+      "id": 3640,
+      "name_he": "קרני שומרון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "ראמה": {
+      "id": 543,
+      "name_he": "ראמה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "ראש העין": {
+      "id": 2640,
+      "name_he": "ראש העין",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "ראש פינה": {
+      "id": 26,
+      "name_he": "ראש פינה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "ראשון לציון": {
+      "id": 8300,
+      "name_he": "ראשון לציון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "רג'ר": {
+      "id": 4501,
+      "name_he": "רג'ר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "רהט": {
+      "id": 1161,
+      "name_he": "רהט",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "רחובות": {
+      "id": 8400,
+      "name_he": "רחובות",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "ריינה": {
+      "id": 542,
+      "name_he": "ריינה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "רכסים": {
+      "id": 922,
+      "name_he": "רכסים",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "רמלה": {
+      "id": 8500,
+      "name_he": "רמלה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "רמת גן": {
+      "id": 8600,
+      "name_he": "רמת גן",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "רמת השרון": {
+      "id": 2650,
+      "name_he": "רמת השרון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "רמת ישי": {
+      "id": 122,
+      "name_he": "רמת ישי",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "רמת נגב": {
+      "id": 5548,
+      "name_he": "רמת נגב",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "רעננה": {
+      "id": 8700,
+      "name_he": "רעננה",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "שבלי - אום אל רנם": {
+      "id": 913,
+      "name_he": "שבלי - אום אל רנם",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "שגב שלום": {
+      "id": 1286,
+      "name_he": "שגב שלום",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "שדות דן": {
+      "id": 5540,
+      "name_he": "שדות דן",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "שדות נגב": {
+      "id": 5539,
+      "name_he": "שדות נגב",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "שדרות": {
+      "id": 1031,
+      "name_he": "שדרות",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "שהם": {
+      "id": 1304,
+      "name_he": "שהם",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "שומרון": {
+      "id": 5572,
+      "name_he": "שומרון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "שלומי": {
+      "id": 812,
+      "name_he": "שלומי",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "שעב": {
+      "id": 538,
+      "name_he": "שעב",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "שער הנגב": {
+      "id": 5537,
+      "name_he": "שער הנגב",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "שער שומרון": {
+      "id": 3826,
+      "name_he": "שער שומרון",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "שפיר": {
+      "id": 5534,
+      "name_he": "שפיר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    },
+    "שפרעם": {
+      "id": 8800,
+      "name_he": "שפרעם",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "תל אביב - יפו": {
+      "id": 5000,
+      "name_he": "תל אביב - יפו",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "תל מונד": {
+      "id": 154,
+      "name_he": "תל מונד",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "תל שבע": {
+      "id": 1054,
+      "name_he": "תל שבע",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details",
+        "bldg_neighborhood_general",
+        "bldg_neighborhood_details",
+        "cmplx_neighborhood_general"
+      ]
+    },
+    "תמר": {
+      "id": 5551,
+      "name_he": "תמר",
+      "files": [
+        "bldg_settlement_general",
+        "bldg_settlement_details",
+        "cmplx_settlement_general",
+        "cmplx_settlement_details"
+      ]
+    }
+  }
+}
